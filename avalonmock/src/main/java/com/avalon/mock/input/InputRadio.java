@@ -19,6 +19,7 @@ public class InputRadio extends Input {
 		super(webElement, webDriver);
 	}
 
+	@Override
 	public void execute() {
 		String radioName = webElement.getAttribute("name");
 		resetValuesIfNeeded(radioName);

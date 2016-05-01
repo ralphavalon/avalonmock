@@ -9,5 +9,6 @@ public class InputNullObject extends Input {
 		super(webElement, webDriver);
 	}
 
+	@Override
 	public void execute() {};
 }

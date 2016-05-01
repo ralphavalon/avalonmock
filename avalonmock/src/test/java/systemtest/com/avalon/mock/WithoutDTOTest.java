@@ -12,9 +12,10 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Select;
 
-import com.avalon.mock.factory.InputFactory;
-import com.avalon.mock.input.Input;
+import com.avalon.mock.element.HtmlElement;
+import com.avalon.mock.factory.HtmlElementFactory;
 
 public class WithoutDTOTest extends AbstractSystemTest {
 	
@@ -24,11 +25,13 @@ public class WithoutDTOTest extends AbstractSystemTest {
 		webDriver = new FirefoxDriver();
 		webDriver.get(url);
 		
-		List<WebElement> elements = webDriver.findElements(By.cssSelector("input"));
-		
-		for (WebElement webElement : elements) {
-			Input input = InputFactory.getInputInstance(webElement, webDriver);
-			input.execute();
+		for (String availableFormElement : availableFormElements) {
+			List<WebElement> elements = webDriver.findElements(By.cssSelector(availableFormElement));
+			
+			for (WebElement webElement : elements) {
+				HtmlElement htmlElement = HtmlElementFactory.getInstanceByFormElement(availableFormElement, webElement, webDriver);
+				htmlElement.execute();
+			}
 		}
 		
 		assertThat(StringUtils.isNotEmpty(getElementByName(inputTextName).getAttribute("value")), is(true));
@@ -44,6 +47,12 @@ public class WithoutDTOTest extends AbstractSystemTest {
 		String radiosCheckedCssSelector = String.format(radiosCheckedCssSelectorTemplate, radioName);
 		List<WebElement> radiosCheckedList = getElementsByCssSelector(radiosCheckedCssSelector);
 		assertThat(radiosCheckedList.size(), equalTo(1));
+		
+		String selectCssSelector = String.format(selectCssSelectorTemplate, selectId);
+		WebElement selectElement = getElementByCssSelector(selectCssSelector);
+		Select select = new Select(selectElement);
+		assertThat(select.getAllSelectedOptions().size(), equalTo(1));
+		
 	}
 
 }

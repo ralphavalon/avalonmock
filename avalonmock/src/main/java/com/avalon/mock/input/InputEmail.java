@@ -17,6 +17,7 @@ public class InputEmail extends Input {
 		this.podam = new PodamFactoryImpl(new EmailProviderStrategy());
 	}
 
+	@Override
 	public void execute() {
 		final Email email = podam.manufacturePojo(Email.class);
 		webElement.sendKeys(email.value);

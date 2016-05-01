@@ -20,6 +20,7 @@ public class InputCheckbox extends Input {
 		super(webElement, webDriver);
 	}
 
+	@Override
 	public void execute() {
 		String checkboxName = webElement.getAttribute("name");
 		resetValuesIfNeeded(checkboxName);

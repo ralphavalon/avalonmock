@@ -39,7 +39,7 @@ public enum InputFactory {
 		return InputNullObject.class;
 	}
 	
-	public static Input getInputInstance(WebElement webElement, WebDriver webDriver) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	public static Input getInstance(WebElement webElement, WebDriver webDriver) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		Class<? extends Input> inputClass = getInputClassByType(webElement.getAttribute("type"));
 		if(!instanceMap.containsKey(inputClass)) {
 			instanceMap.put(inputClass, inputClass.getConstructor(WebElement.class, WebDriver.class).newInstance(webElement, webDriver));
